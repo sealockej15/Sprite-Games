@@ -1,20 +1,25 @@
+#set up
 import pygame, tsk
 pygame.init()
 w=pygame.display.set_mode([1018,573])
 background=tsk.Sprite("HauntedForest.jpg", 0, 0)
 background.draw()
+#wizzy
 wizzy=tsk.Sprite("WizardStand.png", 300, 350)
 wizzy.draw()
 pygame.display.flip()
+# variables for later
 mansion_game=True
 gender=""
 mansion=False
 entrance=False
 last_x=0
 last_y=0
+#intro
 print("Hello, I am Wizzy, I am here to help.")
 while gender != "boy" and gender != "girl":
     gender=input("Are you a boy or a girl? ").lower()
+    #if you are a boy
     if gender == "boy":
         main=tsk.Sprite("AstronautStand.png", 550, 366)
         main.draw()
@@ -29,6 +34,7 @@ while gender != "boy" and gender != "girl":
             wizzy.draw()
             pygame.display.flip()
             gender=""
+    #if you are a girl
     if gender == "girl":
         main=tsk.Sprite("AbeeStand.png", 550, 320)
         main.draw()
@@ -44,6 +50,7 @@ while gender != "boy" and gender != "girl":
             pygame.display.flip()
             gender=""
 investigate_asked=True
+#front loop
 while mansion_game:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -51,6 +58,7 @@ while mansion_game:
     w.fill([255,255,255])
     background=tsk.Sprite("HauntedForest.jpg", 0, 0)
     background.draw()
+    #limit movement
     if gender == "girl":
         low_limit=447.5
         high_limit=126.5
@@ -66,6 +74,7 @@ while mansion_game:
     if y >= low_limit:
         y=low_limit
     if y <= high_limit:
+        #checking if in the mansion
         if x >= 470 and x <= 545:
             mansion=True
         else:
@@ -86,9 +95,11 @@ if mansion:
     entrance=True
     gem=True
     w.fill((255,255,255))
+#entrance
 while entrance:
     background=tsk.Sprite("CuriousLabSeshat.jpg", 0, 0)
     background.draw()
+    #event loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             entrance=False
@@ -96,10 +107,12 @@ while entrance:
         print('Wizzy: "Welcome to Graveyard Manor"')
         print('Wizzy: "In here you can only move by arrow keys intresting..."')
         investigate_asked=True
+        #draw charecter
         if gender == "girl":
             main=tsk.Sprite("AbeeStand.png", 550, 573-253/4*3)
         if gender == "boy":
             main=tsk.Sprite("AstronautStand.png", 550,573-51.75*3)
+    # moving with keys
     if tsk.get_key_pressed(pygame.K_UP):
         main.y-=3
     if tsk.get_key_pressed(pygame.K_DOWN):
@@ -108,6 +121,7 @@ while entrance:
         main.x-=3
     if tsk.get_key_pressed(pygame.K_RIGHT):
         main.x+=3
+    #boundaries and ...
     if gender == "boy":
         if main.y <= 355.75 and main.y >= 250 and main.x != 261:
             print("k")
@@ -127,6 +141,7 @@ while entrance:
             main.x=950
         if main.y >= 445.75:
             main.y=445.75
+    #gem
     if gem:
         gem_orange=tsk.Sprite("RoundGemOrange.png",117.75,75)
         gem_orange.scale = 0.125
@@ -143,6 +158,7 @@ while entrance:
             main=tsk.Sprite("AbeeStand.png", 550, 573-253/4*3)
         if gender == "boy":
             main=tsk.Sprite("AstronautStand.png", 550,573-51.75*3)
+    #cordinates help
     if last_x != main.x or last_y != main.y:
         print(str(main.x) + " " +str(main.y))
         last_x=main.x
